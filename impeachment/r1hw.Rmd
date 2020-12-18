@@ -1,4 +1,9 @@
-#first we'll load our libraries
+---
+title: "Untitled"
+output: html_document
+---
+
+```{r setup, include=FALSE}
 library(tidyverse)
 library(lubridate)
 library(janitor)
@@ -6,21 +11,16 @@ library(scales)
 library(gt)
 library(kableExtra)
 options(dplyr.summarise.inform = FALSE)
-
-
-# run this to load the data for this assignment
-# it will create a dataframe called "impeach," with all House Democrats
 impeach <- read_csv("https://docs.google.com/spreadsheets/d/e/2PACX-1vRh8d5JaDqBtByzNw2JZF3idaACobDhhk-p7chJoktA0HawELHFOvjQOqCpzGA4MGONvPlR7GASqW-K/pub?gid=1765341510&single=true&output=csv")
+```
 
+## R Markdown
 
-# FOR EACH OF THE QUESTIONS BELOW, WRITE YOUR WORKING R CODE TO RETURN THE REQUESTED RESULTS
-# USE COMMENTS (PREFACED BY THE #) BEFORE THE WORKING CODE TO EXPLAIN WHAT YOU'RE DOING FOR EACH STEP
-
-# 1) The column "for_impeachment" indicates whether the member has publicly called for
-# an impeachment inquiry. Filter to return only the ones where the answer is NO.    
+The column "for_impeachment" indicates whether the member has publicly called for an impeachment inquiry. Filter to return only the ones where the answer is NO.    
 
 #used the filter function to filter the data to only show results where answer is no
 
+```{r}
 table1 <- filter(impeach, for_impeachment == "NO")
 
 table1 %>%
@@ -30,12 +30,15 @@ table1 %>%
   row_spec(0, bold = T, color = "pink", font_size = 15) %>%
   column_spec(2, bold = T) %>%
   column_spec(3, bold = T)
+```
 
-# 2) Filter to return only results where a member is both against impeachment, and comes from a 
+2) Filter to return only results where a member is both against impeachment, and comes from a 
 # district that President Trump won in 2016 (which is noted in the "p16winningparty" column)
 
 #used the filter function to filter the data in impeach to show members who voted no who come from a republican voting district
 
+
+```{r}
 table2 <- filter(impeach, for_impeachment == "NO", p16winningparty == "R")
 
 table2 %>%
@@ -45,14 +48,16 @@ table2 %>%
   row_spec(0, bold = T, color = "pink", font_size = 15) %>%
   column_spec(2, bold = T)%>%
   column_spec(3, bold = T)
+```
 
 
-# 3) Filter for only results where a member is against impeachment, comes from a 
+3) Filter for only results where a member is against impeachment, comes from a 
 # district that President Trump won in 2016 (which is noted in the "p16winningparty" column),
 # and also comes from a district that Mitt Romney won in 2012 ("p12winningparty").
 
 #used the filter function to filter on the basis of three variables, voting against impeachment, belonging to a district Trump won and that Mitt Romney also won
 
+```{r}
 table3 <- filter(impeach, for_impeachment == "NO", p16winningparty == "R", p12winningparty == "R")
 
 table3 %>%
@@ -62,11 +67,14 @@ table3 %>%
   row_spec(0, bold = T, color = "pink", font_size = 15) %>%
   column_spec(2, bold = T)%>%
   column_spec(3, bold = T)
+```
 
-# 4) Filter for only results from September 2019 where a member is a YES for impeachment. 
+4) Filter for only results from September 2019 where a member is a YES for impeachment. 
 
 #used the filter function to filter members who voted yes, values in the date month column for september and values in the date year column for 2019
 
+
+```{r}
 table4 <- filter(impeach, for_impeachment =="YES", date_month == 9, date_year == 2019)
 
 table4 %>%
@@ -76,13 +84,15 @@ table4 %>%
   row_spec(0, bold = T, color = "pink", font_size = 15) %>%
   column_spec(2, bold = T)%>%
   column_spec(3, bold = T)
+```
 
 
-# 5) Filter for only results where a member is a YES for impeachment and is from a district
+5) Filter for only results where a member is a YES for impeachment and is from a district
 # where Clinton won more than 70 percent of the vote in 2016 (found in column "clinton_percent")
 
 #used the filter function to filter members who voted yes and where clinton_percent was more than 70%
 
+```{r}
 table5 <- filter(impeach, for_impeachment == "YES", clinton_percent > 70.0)
 
 table5 %>%
@@ -92,12 +102,14 @@ table5 %>%
   row_spec(0, bold = T, color = "pink", font_size = 15) %>%
   column_spec(2, bold = T)%>%
   column_spec(3, bold = T)
+```
 
-# 6) Sort the entire dataframe based on the percentage of a district that has a 
+6) Sort the entire dataframe based on the percentage of a district that has a 
 # bachelor's degree or higher ("pct_bachelors"), from lowest to highest
 
 #used the arrange filter to sort the dataframe based on ascending order of districts with percentage of bachelor's degree or higher
 
+```{r}
 table6 <- arrange(impeach,pct_bachelors)
 
 table6 %>%
@@ -107,14 +119,15 @@ table6 %>%
   row_spec(0, bold = T, color = "pink", font_size = 15) %>%
   column_spec(2, bold = T)%>%
   column_spec(3, bold = T)
+```
 
-
-# 7) Sort the just those who are NO on impeachment based on the percentage of a district that has a 
+7) Sort the just those who are NO on impeachment based on the percentage of a district that has a 
 # bachelor's degree or higher ("pct_bachelors"), from lowest to highest
 
 #used the pipe shortcut to combine the functions of filtering and sorting. 
 #Used the filter function to find members who voted no and used the sort function to then arrange them in ascending order based on pct_bachelors
 
+```{r}
 table7 <- impeach %>%
   filter(for_impeachment == "NO") %>%
   arrange(pct_bachelors)
@@ -127,7 +140,9 @@ table7 %>%
   column_spec(2, bold = T)%>%
   column_spec(3, bold = T)
 
-# 8) Sort the just those who are NO on impeachment based on the percentage of a district that has a 
+```
+
+8) Sort the just those who are NO on impeachment based on the percentage of a district that has a 
 # bachelor's degree or higher ("pct_bachelors"), from lowest to highest.
 # Then filter those records by only those whose bachelor's percentage is below the national average (found
 # in the "pct_bachelors_compared_to_national" column).
@@ -136,6 +151,7 @@ table7 %>%
 #Used the filter function to find members who voted no and used the sort function to then arrange them in ascending order based on pct_bachelors
 #then used filter again to only show records of districts with bachelor's percentages below national average
 
+```{r}
 table8 <- impeach %>%
   filter(for_impeachment == "NO") %>%
   arrange(pct_bachelors) %>%
@@ -148,12 +164,14 @@ table8 %>%
   row_spec(0, bold = T, color = "pink", font_size = 15) %>%
   column_spec(2, bold = T)%>%
   column_spec(3, bold = T)
+```
 
 
-# 9) Filter for only members from New Jersey who are NO on impeachment
+9) Filter for only members from New Jersey who are NO on impeachment
 
 #used the pipe shortcut to combine the two functions of filtering
 
+```{r}
 table9 <- impeach %>%
   filter(for_impeachment == "NO") %>%
   filter(state == "NJ")
@@ -165,9 +183,9 @@ table9 %>%
   row_spec(0, bold = T, color = "pink", font_size = 15) %>%
   column_spec(2, bold = T)%>%
   column_spec(3, bold = T)
+```
 
-
-# 10) Filter for those who were YES on impeachment, with a declared date prior to 2019. So only
+10) Filter for those who were YES on impeachment, with a declared date prior to 2019. So only
 # those with dates before 2019.  Then sort those so that the highest Clinton vote percentages are 
 # at the top.   
 
@@ -175,6 +193,7 @@ table9 %>%
 #filtered for those who voted yes and had a date prior to 2019
 #then sorted it in descending order to have highest Clinton percentages first
 
+```{r}
 table10 <- impeach %>%
   filter(for_impeachment == "YES") %>%
   filter(date_year < 2019) %>%
@@ -187,6 +206,7 @@ table10 %>%
   row_spec(0, bold = T, color = "pink", font_size = 15) %>%
   column_spec(2, bold = T)%>%
   column_spec(3, bold = T)
+```
 
 # 11) Answer this question with a single numeric answer, and show the R code you
 # used to reach that answer: How many members in the dataset who are holdouts on impeachment
@@ -195,6 +215,7 @@ table10 %>%
 
 #19
 
+```{r}
 table11 <- count(impeach %>%
   filter(party == "D") %>%
   filter(for_impeachment == "NO") %>%
@@ -205,8 +226,5 @@ table11 %>%
   kable_classic() %>%
   kable_styling(bootstrap_options = "striped", full_width = F, position = "center", font_size = 12, fixed_thead = T) %>%
   row_spec(0, bold = T, color = "pink", font_size = 15) 
-
-
-
-
+```
 
