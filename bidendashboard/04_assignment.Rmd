@@ -1,0 +1,160 @@
+---
+title: "GW Assignment - Biden Transition"
+author: "Lavanya Bhatia"
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(tidyverse)
+library(lubridate)
+library(janitor)
+library(scales)
+library(gt)
+library(kableExtra)
+options(dplyr.summarise.inform = FALSE)
+
+#run the script for step 03 to update the datasets to capture the current live verions
+#and load all the new dataset objects into the environment (you'll see them populate on the upper right window)
+source("03_compare_current_with_previous.R")
+
+
+```
+
+**Note: use either kable/kableExtra or gt tables to format your final tables for the questions below. You'll likely find it easier to figure out the data parts first, then once that's done add the table formatting.**
+
+# AGENCY TEAMS
+
+Come up with the necessary R code to return the following for the agency review teams.
+
+### *New Names*
+
+Below write code to show the new names added to the agency review team lists since the prior data provided.  
+  
+
+```{r, echo=FALSE}
+
+newnames <- anti_join(transition_data_current, transition_data_previous, by = "idstring")
+
+newnames %>%
+  knitr::kable() %>%
+  kable_classic() %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "center", font_size = 12, fixed_thead = T) %>%
+  row_spec(0, bold = T, color = "blue", font_size = 15) %>%
+  column_spec(2, bold = T)
+
+
+ 
+
+```
+
+
+### *Aggregate Team Changes*
+
+Add data to show the total number of people appointed to each agency team, along with change since last time reflecting the number of new people added. Omit agencies with no change at all.  
+  
+
+```{r, echo=FALSE}
+agencycount_new = agencycount_current
+just_change <- agencycount_compare %>% pull(change)
+agencycount_new["change"] <- just_change
+
+agencycount_new %>%
+  filter(change > 0) %>%
+knitr::kable() %>%
+  kable_classic() %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "center", font_size = 12, fixed_thead = T) %>%
+  row_spec(0, bold = T, color = "blue", font_size = 15) %>%
+  column_spec(2, bold = T)
+```
+
+
+### *Largest and Smallest Overall*
+
+Show the top 10 **largest** agency review teams as of today:
+
+```{r, echo=FALSE}
+
+agencycount_largest <- agencycount_current %>%
+  arrange(desc(current_count)) %>%
+  slice(1:10)
+
+agencycount_largest %>%
+   knitr::kable(caption = "Largest Agency Review Teams") %>%
+  kable_classic() %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "center", font_size = 12) %>%
+  row_spec(0, bold = T, color = "red", font_size = 15)
+  
+
+
+```
+
+Show the top **smallest** agency review teams as of today - which we'll define here as less than five members:
+
+```{r, echo=FALSE}
+
+agencycount_smallest <- agencycount_current %>%
+  arrange(current_count) %>%
+  filter(current_count < 5)
+
+agencycount_smallest %>%
+   knitr::kable(caption = "Smallest Agency Review Teams") %>%
+  kable_classic() %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "center", font_size = 12) %>%
+  row_spec(0, bold = T, color = "red", font_size = 15)
+
+
+ 
+
+```
+
+
+
+# WHITE HOUSE SENIOR STAFF
+
+Come up with the necessary R code to return the following for the WH senior staff.
+
+### *New Names*
+
+Below write code to show the new names added to the senior staff lists since the prior data provided.  
+  
+
+```{r, echo=FALSE}
+
+newstaffnames <- anti_join(staff_data_current, staff_data_previous, by = "idstring")
+
+newstaffnames %>%
+  knitr::kable() %>%
+  kable_classic() %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "center", font_size = 12, fixed_thead = T) %>%
+  row_spec(0, bold = T, color = "pink", font_size = 15) %>%
+  column_spec(1, bold = T)
+
+
+ 
+
+```
+
+
+### *Total Number of Current vs. Previous*
+
+Add code to show the total number of people currently named to the WH senior staff, vs. the previous total number.  
+  
+
+```{r, echo=FALSE}
+
+staff_count_previous <- c(nrow(staff_data_previous))
+staff_count_current <- c(nrow(staff_data_current))                    
+staff_data_compare <- data.frame(staff_count_previous, staff_count_current)
+
+staff_data_compare %>%
+  knitr::kable(caption = "Staff Count Comparison") %>%
+  kable_classic() %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "center", font_size = 12, fixed_thead = T) %>%
+  row_spec(0, bold = T, color = "pink", font_size = 15) %>%
+  column_spec(1:2, bold = T)
+
+
+```
