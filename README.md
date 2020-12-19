@@ -21,3 +21,7 @@ See it in action [here](https://lavanyabhatia.github.io/bidentransition/).
 
 ### Dashboard
 
+This dashboard uses the data scraped from the Biden Transition site to create a presentation of the analysis and highlight the most important takeaways. 
+
+Check out the dashboard [here](https://lavanyabhatia.github.io/bidendashboard/).
+
