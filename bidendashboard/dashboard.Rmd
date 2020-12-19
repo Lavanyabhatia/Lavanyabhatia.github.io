@@ -147,12 +147,6 @@ datatable(agencyteams,
        buttons = c('copy', 'csv', 'excel', 'print')
           ))
 
-agencyteams %>%
-  knitr::kable() %>%
-  kable_classic() %>%
-  kable_styling(bootstrap_options = "striped", full_width = F, position = "center", font_size = 12, fixed_thead = T) %>%
-  row_spec(0, bold = T, color = "blue", font_size = 15) %>%
-  column_spec(2, bold = T)
      
 ```
 
@@ -178,14 +172,7 @@ datatable(whseniorstaff,
           options = list(searchHighlight = TRUE, bPaginate = FALSE, dom = 'Bfrtip',
        buttons = c('copy', 'csv', 'excel', 'print')
           ))
-  
-whseniorstaff %>%
-  knitr::kable() %>%
-  kable_classic() %>%
-  kable_styling(bootstrap_options = "striped", full_width = F, position = "center", font_size = 12, fixed_thead = T) %>%
-  row_spec(0, bold = T, color = "blue", font_size = 15) %>%
-  column_spec(2, bold = T)
-  
+
 ```
 
 
