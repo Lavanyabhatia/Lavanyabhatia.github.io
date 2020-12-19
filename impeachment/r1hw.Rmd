@@ -14,9 +14,8 @@ options(dplyr.summarise.inform = FALSE)
 impeach <- read_csv("https://docs.google.com/spreadsheets/d/e/2PACX-1vRh8d5JaDqBtByzNw2JZF3idaACobDhhk-p7chJoktA0HawELHFOvjQOqCpzGA4MGONvPlR7GASqW-K/pub?gid=1765341510&single=true&output=csv")
 ```
 ### Impeachment Data Analysis
-## R Markdown
 
-The column "for_impeachment" indicates whether the member has publicly called for an impeachment inquiry. Filter to return only the ones where the answer is NO.    
+1) The column "for_impeachment" indicates whether the member has publicly called for an impeachment inquiry. Filter to return only the ones where the answer is NO.    
 
 
 ```{r}

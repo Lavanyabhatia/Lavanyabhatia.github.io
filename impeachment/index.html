@@ -592,10 +592,9 @@ summary {
 
 <div id="impeachment-data-analysis" class="section level3">
 <h3>Impeachment Data Analysis</h3>
-</div>
-<div id="r-markdown" class="section level2">
-<h2>R Markdown</h2>
-<p>The column “for_impeachment” indicates whether the member has publicly called for an impeachment inquiry. Filter to return only the ones where the answer is NO.</p>
+<ol style="list-style-type: decimal">
+<li>The column “for_impeachment” indicates whether the member has publicly called for an impeachment inquiry. Filter to return only the ones where the answer is NO.</li>
+</ol>
 <pre class="r"><code>table1 &lt;- filter(impeach, for_impeachment == &quot;NO&quot;)
 
 table1 %&gt;%
@@ -48019,15 +48018,9 @@ D
 </tr>
 </tbody>
 </table>
-</div>
-<div id="answer-this-question-with-a-single-numeric-answer-and-show-the-r-code-you" class="section level1">
-<h1>11) Answer this question with a single numeric answer, and show the R code you</h1>
-</div>
-<div id="used-to-reach-that-answer-how-many-members-in-the-dataset-who-are-holdouts-on-impeachment" class="section level1">
-<h1>used to reach that answer: How many members in the dataset who are holdouts on impeachment</h1>
-</div>
-<div id="comes-from-districts-with-a-gdp-below-the-national-figure" class="section level1">
-<h1>comes from districts with a GDP below the national figure?</h1>
+<ol start="11" style="list-style-type: decimal">
+<li>Answer this question with a single numeric answer, and show the R code you # used to reach that answer: How many members in the dataset who are holdouts on impeachment # comes from districts with a GDP below the national figure?</li>
+</ol>
 <pre class="r"><code>table11 &lt;- count(impeach %&gt;%
   filter(party == &quot;D&quot;) %&gt;%
   filter(for_impeachment == &quot;NO&quot;) %&gt;%
