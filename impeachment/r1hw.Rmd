@@ -196,7 +196,7 @@ table10 %>%
   column_spec(3, bold = T)
 ```
 
-# 11) Answer this question with a single numeric answer, and show the R code you
+11) Answer this question with a single numeric answer, and show the R code you
 # used to reach that answer: How many members in the dataset who are holdouts on impeachment
 # comes from districts with a GDP below the national figure?
 
