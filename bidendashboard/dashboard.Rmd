@@ -14,7 +14,11 @@ library(lubridate)
 library(janitor)
 library(scales)
 library(gt)
+library(DT)
 library(kableExtra)
+library(htmlwidgets)
+library(htmltools)
+library(glue)
 options(dplyr.summarise.inform = FALSE)
 source("03_compare_current_with_previous.R")
 ```
@@ -36,6 +40,7 @@ newnames%>%
   kable_styling(bootstrap_options = "striped", full_width = F, position = "center", font_size = 12, fixed_thead = T) %>%
   row_spec(0, bold = T, color = "blue", font_size = 15) %>%
   column_spec(2, bold = T)
+
 
 ```
 
@@ -87,4 +92,100 @@ agencycount_smallest %>%
   row_spec(0, bold = T, color = "blue", font_size = 15)
 
 ```
+
+White House Senior Staff Highlights
+=====================================================================
+
+Column {data-width=650}
+-----------------------------------------------------------------------
+
+### Newly Appointed Senior Staff
+
+```{r}
+newstaffnames <- anti_join(staff_data_current, staff_data_previous, by = "idstring")
+
+newstaffnames %>%
+  knitr::kable() %>%
+  kable_classic() %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "center", font_size = 12, fixed_thead = T) %>%
+  row_spec(0, bold = T, color = "blue", font_size = 15) %>%
+  column_spec(1, bold = T)
+```
+
+### Total Number of Currently Named WH Staff vs. Previously Named WH Staff
+
+```{r}
+staff_count_previous <- c(nrow(staff_data_previous))
+staff_count_current <- c(nrow(staff_data_current))                    
+staff_data_compare <- data.frame(staff_count_previous, staff_count_current)
+
+staff_data_compare %>%
+  knitr::kable(caption = "Staff Count Comparison") %>%
+  kable_classic() %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "center", font_size = 12, fixed_thead = T) %>%
+  row_spec(0, bold = T, color = "blue", font_size = 15) %>%
+  column_spec(1:2, bold = T)
+
+```
+
+Agency Review Teams Database
+=====================================================================
+To filter, click on the boxes at the top of the columns. To sort, use the up/down arrows by the column names.
+
+Column {data-width=650}
+-----------------------------------------------------------------------
+
+### Updated List of All Agency Review Teams
+
+```{r}
+
+datatable(agencyteams,
+          rownames = FALSE,
+          filter = "top",
+          extensions = 'Buttons',
+          options = list(searchHighlight = TRUE, bPaginate = FALSE, dom = 'Bfrtip',
+       buttons = c('copy', 'csv', 'excel', 'print')
+          ))
+
+agencyteams %>%
+  knitr::kable() %>%
+  kable_classic() %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "center", font_size = 12, fixed_thead = T) %>%
+  row_spec(0, bold = T, color = "blue", font_size = 15) %>%
+  column_spec(2, bold = T)
+     
+```
+
+
+
+
+
+White House Senior Staff Database
+=====================================================================
+To filter, click on the boxes at the top of the columns. To sort, use the up/down arrows by the column names.
+
+Column {data-width=650}
+-----------------------------------------------------------------------
+
+### Updated List of All White House Senior Staff
+
+```{r}
+
+datatable(whseniorstaff,
+          rownames = FALSE,
+          filter = "top",
+          extensions = 'Buttons',
+          options = list(searchHighlight = TRUE, bPaginate = FALSE, dom = 'Bfrtip',
+       buttons = c('copy', 'csv', 'excel', 'print')
+          ))
+  
+whseniorstaff %>%
+  knitr::kable() %>%
+  kable_classic() %>%
+  kable_styling(bootstrap_options = "striped", full_width = F, position = "center", font_size = 12, fixed_thead = T) %>%
+  row_spec(0, bold = T, color = "blue", font_size = 15) %>%
+  column_spec(2, bold = T)
+  
+```
+
 
